@@ -25,7 +25,7 @@ public class ProductController {
 
     // 상품 정보 저장
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> addProduct(@RequestBody ProductRequestDTO requestDTO) {
+    public ResponseEntity<ProductResponseDTO> addProducts(@RequestBody ProductRequestDTO requestDTO) {
         ProductResponseDTO responseDTO = productService.addProduct(requestDTO);
         return new ResponseEntity(responseDTO, HttpStatus.OK);
     }
@@ -35,5 +35,19 @@ public class ProductController {
     public ResponseEntity<List<ProductResponseDTO>> getProductList() {
         System.out.println(productService.getProductList());
         return new ResponseEntity(productService.getProductList(), HttpStatus.OK);
+    }
+
+    // 상품 단일 조회
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable Long productId) {
+        return new ResponseEntity<>(productService.getProduct(productId), HttpStatus.OK);
+    }
+
+    // 상품 업데이트
+    @PatchMapping("/{productId}")
+    public ResponseEntity<ProductResponseDTO> updateProduct(
+            @PathVariable Long productId, @RequestBody ProductRequestDTO requestDTO
+    ) {
+        return new ResponseEntity<>(productService.updateProduct(productId, requestDTO), HttpStatus.OK);
     }
 }

@@ -11,11 +11,11 @@ public interface ProductService {
     List<ProductResponseDTO> getProductList();
 
     // 상품 상세 조회
-    Product getProduct(Long productId);
+    ProductResponseDTO getProduct(Long productId);
 
     // 상품 저장
     ProductResponseDTO addProduct(ProductRequestDTO requestDTO);
 
     // 상품 수정
-    void updateProduct(Long productId, Product updateParam);
+    ProductResponseDTO updateProduct(Long productId, ProductRequestDTO requestDTO);
 }

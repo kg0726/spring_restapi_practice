@@ -24,24 +24,27 @@ public class ProductServiceImpl implements ProductService{
         ArrayList<Product> products = productRepository.findAll();
         List<ProductResponseDTO> responseDTO = new ArrayList<>();
         for (Product product : products) {
-            responseDTO.add(new ProductResponseDTO(product.getProductId(),
-                    product.getProductName(), product.getProductPrice(), product.getProductAmount()));
+            responseDTO.add(new ProductResponseDTO(product));
         }
         return responseDTO;
     }
 
     @Override
-    public Product getProduct(Long productId) {
-        return productRepository.findById(productId);
+    public ProductResponseDTO getProduct(Long productId) {
+        return new ProductResponseDTO(productRepository.findById(productId));
     }
 
     @Override
     public ProductResponseDTO addProduct(ProductRequestDTO requestDTO) {
-        return productRepository.save(requestDTO);
+        // 여기에서 DTO를 product 객체로 변환해서 전달
+        Product product = productRepository.save(new Product(requestDTO));
+        // 다시 product 객체를 응답 dto로 변환해서 전달
+        return new ProductResponseDTO(product);
     }
 
     @Override
-    public void updateProduct(Long productId, Product updateParam) {
-        productRepository.update(productId, updateParam);
+    public ProductResponseDTO updateProduct(Long productId, ProductRequestDTO requestDTO) {
+        Product updateParam = new Product(requestDTO);
+        return new ProductResponseDTO(productRepository.update(productId, updateParam));
     }
 }

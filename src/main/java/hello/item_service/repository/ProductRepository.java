@@ -29,20 +29,19 @@ public class ProductRepository {
     }
 
     // 상품 등록
-    public ProductResponseDTO save(ProductRequestDTO requestDTO) {
-        Product product = new Product(requestDTO);
+    public Product save(Product product) {
         product.setProductId(++sequence);
         productMap.put(product.getProductId(), product);
         // 반환 객체를 생성
-        return new ProductResponseDTO(product.getProductId(),
-                product.getProductName(), product.getProductPrice(), product.getProductAmount());
+        return product;
     }
 
     // 상품 업데이터
-    public void update(Long productId, Product updateParam) {
+    public Product update(Long productId, Product updateParam) {
         Product product = findById(productId);
         product.setProductName(updateParam.getProductName());
         product.setProductAmount(updateParam.getProductAmount());
         product.setProductPrice(updateParam.getProductPrice());
+        return product;
     }
 }

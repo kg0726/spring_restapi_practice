@@ -1,6 +1,7 @@
 package hello.item_service.dto;
 
 
+import hello.item_service.domain.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +23,12 @@ public class ProductResponseDTO {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productAmount = productAmount;
+    }
+
+    public ProductResponseDTO(Product product) {
+        this.productId = product.getProductId();
+        this.productName = product.getProductName();
+        this.productPrice = product.getProductPrice();
+        this.productAmount = product.getProductAmount();
     }
 }
