@@ -2,6 +2,7 @@ package hello.item_service.repository;
 
 import hello.item_service.domain.Product;
 import hello.item_service.dto.ProductRequestDTO;
+import hello.item_service.dto.ProductResponseDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ public class ProductRepository {
     private static Long sequence = 0L;
 
     // 상품 리스트 반환
-    public List<Product> findAll() {
+    public ArrayList<Product> findAll() {
+        System.out.println(productMap.values());
+        System.out.println(productMap);
         return new ArrayList<>(productMap.values());
     }
 
@@ -26,10 +29,13 @@ public class ProductRepository {
     }
 
     // 상품 등록
-    public Product save(ProductRequestDTO requestDTO) {
+    public ProductResponseDTO save(ProductRequestDTO requestDTO) {
         Product product = new Product(requestDTO);
         product.setProductId(++sequence);
-        return product;
+        productMap.put(product.getProductId(), product);
+        // 반환 객체를 생성
+        return new ProductResponseDTO(product.getProductId(),
+                product.getProductName(), product.getProductPrice(), product.getProductAmount());
     }
 
     // 상품 업데이터

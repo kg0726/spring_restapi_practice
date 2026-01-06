@@ -2,12 +2,15 @@ package hello.item_service.controller;
 
 import hello.item_service.domain.Product;
 import hello.item_service.dto.ProductRequestDTO;
+import hello.item_service.dto.ProductResponseDTO;
 import hello.item_service.service.ProductService;
 import hello.item_service.service.ProductServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -22,7 +25,15 @@ public class ProductController {
 
     // 상품 정보 저장
     @PostMapping
-    public Product addProduct(@RequestBody ProductRequestDTO requestDTO) {
-        productService.addProduct(requestDTO)
+    public ResponseEntity<ProductResponseDTO> addProduct(@RequestBody ProductRequestDTO requestDTO) {
+        ProductResponseDTO responseDTO = productService.addProduct(requestDTO);
+        return new ResponseEntity(responseDTO, HttpStatus.OK);
+    }
+
+    // 상품 전체 조회
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDTO>> getProductList() {
+        System.out.println(productService.getProductList());
+        return new ResponseEntity(productService.getProductList(), HttpStatus.OK);
     }
 }

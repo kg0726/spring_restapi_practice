@@ -2,9 +2,11 @@ package hello.item_service.service;
 
 import hello.item_service.domain.Product;
 import hello.item_service.dto.ProductRequestDTO;
+import hello.item_service.dto.ProductResponseDTO;
 import hello.item_service.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +20,14 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductList() {
-        return productRepository.findAll();
+    public List<ProductResponseDTO> getProductList() {
+        ArrayList<Product> products = productRepository.findAll();
+        List<ProductResponseDTO> responseDTO = new ArrayList<>();
+        for (Product product : products) {
+            responseDTO.add(new ProductResponseDTO(product.getProductId(),
+                    product.getProductName(), product.getProductPrice(), product.getProductAmount()));
+        }
+        return responseDTO;
     }
 
     @Override
@@ -28,7 +36,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product addProduct(ProductRequestDTO requestDTO) {
+    public ProductResponseDTO addProduct(ProductRequestDTO requestDTO) {
         return productRepository.save(requestDTO);
     }
 
