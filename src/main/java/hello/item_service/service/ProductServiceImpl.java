@@ -3,6 +3,7 @@ package hello.item_service.service;
 import hello.item_service.domain.Product;
 import hello.item_service.dto.ProductRequestDTO;
 import hello.item_service.dto.ProductResponseDTO;
+import hello.item_service.repository.MemoryProductRepository;
 import hello.item_service.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
