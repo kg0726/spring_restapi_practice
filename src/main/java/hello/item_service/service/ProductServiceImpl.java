@@ -3,12 +3,15 @@ package hello.item_service.service;
 import hello.item_service.domain.Product;
 import hello.item_service.dto.ProductRequestDTO;
 import hello.item_service.dto.ProductResponseDTO;
+import hello.item_service.exception.ProductNotFoundException;
 import hello.item_service.repository.MemoryProductRepository;
 import hello.item_service.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -32,7 +35,11 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponseDTO getProduct(Long productId) {
-        return new ProductResponseDTO(productRepository.findById(productId));
+        Product product = productRepository.findById(productId);
+        if (product == null) {
+            throw new ProductNotFoundException("해당 상품을 찾을 수 없습니다.");
+        }
+        return new ProductResponseDTO(product);
     }
 
     @Override

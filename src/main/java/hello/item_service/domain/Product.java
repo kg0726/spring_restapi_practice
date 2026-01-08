@@ -12,6 +12,9 @@ public class Product {
     private int productPrice;
     private int productAmount;
 
+    // 서버에 저장될 이미지 파일 이름
+    private String imageFileName;
+
     public Product(ProductRequestDTO requestDTO) {
         this.productAmount = requestDTO.getProductAmount();
         this.productName = requestDTO.getProductName();
